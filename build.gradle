@@ -1,0 +1,71 @@
+//group 'com.likaiqiang.demo'
+//version '1.0-SNAPSHOT'
+
+//configurations{
+//    ebeanagent
+//}
+//
+//ant.taskdef(
+//        name: "ebeanEnhance",
+//        classname:"com.avaje.ebean.enhance.ant.AntEnhanceTask",
+//        classpath:configurations.ebeanagent.asPath
+//
+//)
+//
+//def ebeanEnhance = {dir, packages ->
+//    println dir
+//    println packages
+//    println '============================================'
+//    println '  Enhance ebean classes....' + dir
+//    println '============================================'
+//    ant.ebeanEnhance(classSource: dir,
+//                packages: packages,
+//                transformArgs: "debug=10")
+//    println 'Enhance ebean end..................'
+//}
+//
+//compileJava.doLast {
+//    ebeanEnhance(destinationDir, "com.likaiqiang.demo.model.*")
+//}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.5
+version =  '1.0'
+repositories {
+    mavenCentral()
+    //    使用开源中国的maven仓库
+    maven { url 'http://maven.oschina.net/content/groups/public/' }
+    jcenter()
+    maven {url "http://repos.someok.com/release"}
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    //导入本地的依赖包
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    //从maven导入依赖库
+    compile ('org.apache.httpcomponents:httpclient:4.4')
+    compile ('org.apache.commons:commons-lang3:3.3.2')
+
+    //spring、ebean
+    compile 'org.avaje.ebeanorm:avaje-ebeanorm-spring:4.5.3'
+    compile 'com.h2database:h2:1.4.189'
+    compile "org.springframework:spring-orm:4.1.7.RELEASE"
+    compile 'org.springframework:spring-aop:4.1.7.RELEASE'
+    testCompile 'org.springframework:spring-test:4.1.7.RELEASE'
+    compile 'org.springframework:spring-webmvc:4.1.7.RELEASE'
+    compile 'org.aspectj:aspectjweaver:1.8.6'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.6.1'
+
+    compile 'mysql:mysql-connector-java:5.1.27'
+
+    compile 'javax.servlet:javax.servlet-api:3.0.1'
+    compile 'javax.servlet:jsp-api:2.0'
+    compile 'javax.servlet:jstl:1.2'
+    compile 'javax.transaction:jta:1.1'
+
+    //ebeanagent 'org.avaje.ebeanorm:avaje-ebeanorm-agent:4.7.1'
+}
